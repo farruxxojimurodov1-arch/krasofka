@@ -1,0 +1,152 @@
+/* ==========================================================================
+   VELOX — APP-LEVEL MOTION, ROUTE TRANSITIONS & MICRO-INTERACTIONS
+   ========================================================================== */
+
+/* 1. Sahifalar o'rtasida silliq paydo bo'lish animatsiyasi */
+.home-page,
+.shop-page,
+.contact-page {
+  animation: pageEnter 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* 2. Asosiy tugmalarda nur (shimmer) o'tishi */
+.btn-primary {
+  overflow: hidden;
+}
+
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -130%;
+  width: 65%;
+  height: 100%;
+  background: linear-gradient(
+    110deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.48) 50%,
+    transparent 100%
+  );
+  transform: skewX(-24deg);
+  transition: left 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.btn-primary:hover::after {
+  left: 145%;
+}
+
+/* 3. Toast bildirishnoma holatlari (success / error / info) */
+.toast-item.toast-success {
+  border-color: rgba(200, 255, 0, 0.45);
+}
+
+.toast-item.toast-success .toast-dot {
+  background: var(--accent-volt);
+  box-shadow: 0 0 12px var(--accent-volt);
+}
+
+.toast-item.toast-error {
+  border-color: rgba(255, 46, 91, 0.5);
+}
+
+.toast-item.toast-error .toast-dot {
+  background: var(--accent-crimson);
+  box-shadow: 0 0 12px var(--accent-crimson);
+}
+
+.toast-item.toast-info {
+  border-color: rgba(0, 229, 255, 0.4);
+}
+
+.toast-item.toast-info .toast-dot {
+  background: var(--accent-cyan);
+  box-shadow: 0 0 12px var(--accent-cyan);
+}
+
+/* 4. 3D kartochkalar va Bento bloklari uchun yorug' chegara nuri */
+.hero-stage-card::before,
+.bento-card::before,
+.showroom-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(200, 255, 0, 0.28),
+    rgba(255, 255, 255, 0.04) 45%,
+    rgba(0, 229, 255, 0.22)
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.45;
+  transition: opacity 0.35s ease;
+}
+
+.hero-stage-card:hover::before,
+.bento-card:hover::before,
+.showroom-card:hover::before {
+  opacity: 1;
+}
+
+/* 5. Hero suzuvchi teglar animatsiyasi */
+.stage-floating-tag.tag-left {
+  animation: tagBob 5.2s ease-in-out infinite;
+}
+
+.stage-floating-tag.tag-right {
+  animation: tagBob 5.2s ease-in-out infinite reverse;
+}
+
+@keyframes tagBob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+/* 6. Marquee lentasini kursor ustida to'xtatish */
+.marquee-strip:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* 7. Klaviatura fokusi (Accessibility) */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--accent-volt);
+  outline-offset: 2px;
+}
+
+/* 8. Kam harakatli rejimni yoqqan qurilmalar uchun */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
